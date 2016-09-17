@@ -10,10 +10,24 @@ import UIKit
 import QuartzCore
 import SceneKit
 
+
+
+class Mochihuda {
+    var Mochi : [Int]=[1,5,6]
+    var Syutoku : [Int]=[]
+    var Mochi_Nokori = 8
+    
+}
+
+
+
 class GameViewController: UIViewController {
     
         private var myImageView: UIImageView!
     
+
+
+
     var huda: [UInt8:String] = [11:"カス", 12:"カス", 13:"短冊", 14:"五光",
                                 21:"カス", 22:"カス", 23:"短冊", 24:"タネ",
                                 31:"カス", 32:"カス", 33:"短冊", 34:"五光",
@@ -47,7 +61,7 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
 //        // UIImageViewを作成する.
 //        myImageView = UIImageView(frame: CGRectMake(0,0,100,120))
 //        
