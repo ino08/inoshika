@@ -67,7 +67,7 @@ class GameViewController: UIViewController {
         }
         
         for kinds in huda.values {
-            print("\(kinds)")
+            print("\(kinds):t")
         }
         
     }
