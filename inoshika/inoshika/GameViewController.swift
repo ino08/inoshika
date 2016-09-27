@@ -11,34 +11,74 @@ import QuartzCore
 import SceneKit
 
 
-
 class Player {
     var num :Int = 0                                //player番号
     var Mochi : [Int]=[11,103,84,22,74,83,54,0]     //持ち札
-    var Syutoku : [Int]=[0]                         //取得札
+    var Syutoku : [Int]=[14,34,84,114,123]          //取得札
     var Mochi_Nokori = 8                            //持ち札の残り枚数
+    var Syutoku_Maisu = 5                           //取得札の枚数
     var points:Int = 0                              //得点
+    var yaku_check:Int = 0
     var i = 0
+    var flag = 0
     
     
-    func check_points()->Void{                      //得点のチェック
-        
+    func check_points() -> Void {                      //得点のチェック
         print("Player",num,"の得点は",points,"点です。")
     }
     
     
-    func Mochihuda()->Void{                         //持ち札のチェック
-        
+    func Mochihuda() -> Void {                         //持ち札のチェック
         print("player",num,"の")
         
         for i in 0..<Mochi_Nokori{
             
-            print(i+1,"枚目の持ち札は",huda[(Mochi[i])])
+            print(i+1,"枚目の持ち札は",huda[Mochi[i]])
         
         }
     }
     
-    func check_yaku()->Int{
+    func check_yaku()->Void{                            //
+        i = 0
+        
+        for i in 0..<Syutoku_Maisu{
+            
+            if huda[Syutoku[i]] == "五光"{
+                yaku_check = yaku_check+1
+                
+            }
+        }
+        
+        switch yaku_check{
+        case 3:
+            print("三光です")
+            points = points + 6
+        case 4:
+            i = 0
+            flag = 0
+            for i in 0..<Syutoku_Maisu{
+                if Syutoku[i] == 114 {
+                   flag = 1
+                    break
+                }
+            }
+            
+            if flag == 1 {
+                
+                print("雨四光です")
+                points = points + 8
+                
+            } else {
+            
+                print("四光です")
+                points = points + 10
+            }
+        case 5:
+                print("五光です")
+            points = points + 15
+            default:
+            print(yaku_check)
+        }
         
     }
     
@@ -78,20 +118,26 @@ var player2 = Player()
 
 class GameViewController: UIViewController {
     
-        private var myImageView: UIImageView!
+    private var myImageView: UIImageView!
     
-                                
+    @IBOutlet weak var testButton: UIButton!
+    
+    @IBAction func touchTextButton(sender: UIButton) {
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.whiteColor()
         
         player1.num = 1
-        player1.points = 3
-        player2.points = 10
+        player2.num = 2
         player1.Mochi_Nokori = 7
         player1.check_points()
         player2.check_points()
         player1.Mochihuda()
+        player1.check_yaku()
+        player1.check_points()
         
 
 ////        // UIImageViewを作成する.

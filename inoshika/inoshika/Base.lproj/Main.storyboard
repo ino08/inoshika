@@ -9,17 +9,40 @@
         <scene sceneID="tXr-a1-R10">
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="inoshika" customModuleProvider="target" sceneMemberID="viewController">
-                    <label key="view" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BqY-wk-QgB">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8zb-is-ttb"/>
+                        <viewControllerLayoutGuide type="bottom" id="tXD-Yg-euY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="141-Hk-Dh0">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROA-jV-q28">
+                                <rect key="frame" x="30" y="628" width="354" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="kIR-l2-HBv"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="touchTextButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="LSC-Re-Vur"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ROA-jV-q28" secondAttribute="trailing" constant="30" id="dV5-Gn-HPy"/>
+                            <constraint firstItem="ROA-jV-q28" firstAttribute="leading" secondItem="141-Hk-Dh0" secondAttribute="leading" constant="30" id="hkW-xh-xc2"/>
+                            <constraint firstAttribute="bottom" secondItem="ROA-jV-q28" secondAttribute="bottom" constant="58" id="yOs-Tm-JHE"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="testButton" destination="ROA-jV-q28" id="MUq-Sa-HHk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-801" y="242"/>
+            <point key="canvasLocation" x="-837" y="-369"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ga4-8l-kgM">
