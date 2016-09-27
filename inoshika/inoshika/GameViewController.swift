@@ -49,7 +49,7 @@ class Player {
         
     }
     
-    func Goko_check() -> Void {
+    func Goko_check() -> Void {                           //五光のチェック
 
         
         for i in 0..<syutoku_maisu{
@@ -90,7 +90,7 @@ class Player {
         
     }
     
-    func Kasu_check() -> Void {
+    func Kasu_check() -> Void {                            //カスのチェック
         yaku_check = 0
         
         for i in 0..<syutoku_maisu{
@@ -105,7 +105,7 @@ class Player {
         }
     }
     
-    func Tan_check() -> Void {
+    func Tan_check() -> Void {                             //タンのチェック
         yaku_check = 0
         
         for i in 0..<syutoku_maisu{
@@ -121,7 +121,7 @@ class Player {
         }
     }
     
-    func Tane_check() -> Void {
+    func Tane_check() -> Void {                             //タネのチェック
         yaku_check = 0
         
         for i in 0..<syutoku_maisu{
@@ -136,7 +136,7 @@ class Player {
         }
     }
     
-    func InoShikaCyo() -> Void {
+    func InoShikaCyo() -> Void {                            //猪鹿蝶のチェック
         yaku_check = 0
         
         for i in 0..<syutoku_maisu{
