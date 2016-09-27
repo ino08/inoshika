@@ -15,9 +15,9 @@ import SceneKit
 class Player {
     var num :Int = 0                                //player番号
     var mochi : [Int]=[11,103,84,22,74,83,54,0]     //持ち札
-    var syutoku : [Int]=[14,34,84,114,123,11,21,31,41,51,61,71,81,91,101]          //取得札
+    var syutoku : [Int]=[14,34,84,114,123,11,21,31,41,51,61,71,81,91,101,64,74,104]          //取得札
     var mochi_nokori = 8                            //持ち札の残り枚数
-    var syutoku_maisu = 15                           //取得札の枚数
+    var syutoku_maisu = 18                          //取得札の枚数
     var points:Int = 0                              //得点
     var yaku_check:Int = 0                          //役判定
     var i = 0
@@ -44,6 +44,8 @@ class Player {
         
         Goko_check()
         Kasu_check()
+        Tan_check()
+        InoShikaCyo()
         
     }
     
@@ -97,14 +99,64 @@ class Player {
                 yaku_check = yaku_check + 1
             }
         }
-        
-        points = points + (yaku_check-9)
-        
-        print("カスです")
+       if yaku_check > 9{
+            points = points + (yaku_check-9)
+            print("カスです")
+        }
     }
     
+    func Tan_check() -> Void {
+        yaku_check = 0
+        
+        for i in 0..<syutoku_maisu{
+            
+            if huda[syutoku[i]] == "短冊"{
+                yaku_check = yaku_check + 1
+            }
+        }
+        
+        if yaku_check > 4{
+            points = points + (yaku_check-4)
+            print("短冊です")
+        }
+    }
     
+    func Tane_check() -> Void {
+        yaku_check = 0
+        
+        for i in 0..<syutoku_maisu{
+            
+            if huda[syutoku[i]] == "タネ"{
+                yaku_check = yaku_check + 1
+            }
+        }
+        if yaku_check > 4{
+            points = points + (yaku_check-4)
+            print("タネです")
+        }
+    }
     
+    func InoShikaCyo() -> Void {
+        yaku_check = 0
+        
+        for i in 0..<syutoku_maisu{
+            
+            if syutoku[i] == 64{
+                yaku_check = yaku_check + 1
+            }else if syutoku[i] == 74{
+                yaku_check = yaku_check + 1
+            }else if syutoku[i] == 104{
+                yaku_check = yaku_check + 1
+            }
+        }
+        
+        if yaku_check == 3{
+            points = points + 5
+            print("猪鹿蝶です")
+        }
+    }
+
+
     
 }
 
