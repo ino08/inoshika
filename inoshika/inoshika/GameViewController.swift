@@ -12,79 +12,107 @@ import SceneKit
 
 
 
-class Mochihuda {
-    var Mochi : [Int]=[1,5,6]
-    var Syutoku : [Int]=[]
-    var Mochi_Nokori = 8
+class Player {
+    var num :Int = 0                                //player番号
+    var Mochi : [Int]=[11,103,84,22,74,83,54,0]     //持ち札
+    var Syutoku : [Int]=[0]                         //取得札
+    var Mochi_Nokori = 8                            //持ち札の残り枚数
+    var points:Int = 0                              //得点
+    var i = 0
+    
+    
+    func check_points()->Void{                      //得点のチェック
+        
+        print("Player",num,"の得点は",points,"点です。")
+    }
+    
+    
+    func Mochihuda()->Void{                         //持ち札のチェック
+        
+        print("player",num,"の")
+        
+        for i in 0..<Mochi_Nokori{
+            
+            print(i+1,"枚目の持ち札は",huda[(Mochi[i])])
+        
+        }
+    }
+    
+    func check_yaku()->Int{
+        
+    }
     
 }
 
+
+var huda: [Int:String] = [11:"カス", 12:"カス", 13:"短冊", 14:"五光",
+                            21:"カス", 22:"カス", 23:"短冊", 24:"タネ",
+                            31:"カス", 32:"カス", 33:"短冊", 34:"五光",
+                            41:"カス", 42:"カス", 43:"短冊", 44:"タネ",
+                            51:"カス", 52:"カス", 53:"短冊", 54:"タネ",
+                            61:"カス", 62:"カス", 63:"短冊", 64:"タネ",
+                            71:"カス", 72:"カス", 73:"短冊", 74:"タネ",
+                            81:"カス", 82:"カス", 83:"タネ", 84:"五光",
+                            91:"カス", 92:"カス", 93:"短冊", 94:"タネ",
+                            101:"カス", 102:"カス", 103:"短冊", 104:"タネ",
+                            111:"カス", 112:"短冊", 113:"タネ", 114:"五光",
+                            121:"カス", 122:"カス", 123:"カス", 124:"五光"]
+
+var image: [Int:String] = [11:"image11", 12:"image12", 13:"image13", 14:"image14",
+                             21:"image21", 22:"image22", 23:"image23", 24:"image24",
+                             31:"image31", 32:"image32", 33:"image33", 34:"image34",
+                             41:"image41", 42:"image42", 43:"image43", 44:"image44",
+                             51:"image51", 52:"image52", 53:"image53", 54:"image54",
+                             61:"image61", 62:"image62", 63:"image63", 64:"image64",
+                             71:"image71", 72:"image72", 73:"image73", 74:"image74",
+                             81:"image81", 82:"image82", 83:"image83", 84:"image84",
+                             91:"image91", 92:"image92", 93:"image93", 94:"image94",
+                             101:"image101", 102:"image102", 103:"image103", 104:"image104",
+                             111:"image111", 112:"image112", 113:"image113", 114:"image114",
+                             121:"image121", 122:"image122", 123:"image123", 124:"image124"]
+
+
+var player1 = Player()
+var player2 = Player()
 
 
 class GameViewController: UIViewController {
     
         private var myImageView: UIImageView!
     
-
-
-
-    var huda: [UInt8:String] = [11:"カス", 12:"カス", 13:"短冊", 14:"五光",
-                                21:"カス", 22:"カス", 23:"短冊", 24:"タネ",
-                                31:"カス", 32:"カス", 33:"短冊", 34:"五光",
-                                41:"カス", 42:"カス", 43:"短冊", 44:"タネ",
-                                51:"カス", 52:"カス", 53:"短冊", 54:"タネ",
-                                61:"カス", 62:"カス", 63:"短冊", 64:"タネ",
-                                71:"カス", 72:"カス", 73:"短冊", 74:"タネ",
-                                81:"カス", 82:"カス", 83:"タネ", 84:"五光",
-                                91:"カス", 92:"カス", 93:"短冊", 94:"タネ",
-                                101:"カス", 102:"カス", 103:"短冊", 104:"タネ",
-                                111:"カス", 112:"短冊", 113:"タネ", 114:"五光",
-                                121:"カス", 122:"カス", 123:"カス", 124:"五光"]
-    
-    var image: [UInt8:String] = [11:"image11", 12:"image12", 13:"image13", 14:"image14",
-                                 21:"image21", 22:"image22", 23:"image23", 24:"image24",
-                                 31:"image31", 32:"image32", 33:"image33", 34:"image34",
-                                 41:"image41", 42:"image42", 43:"image43", 44:"image44",
-                                 51:"image51", 52:"image52", 53:"image53", 54:"image54",
-                                 61:"image61", 62:"image62", 63:"image63", 64:"image64",
-                                 71:"image71", 72:"image72", 73:"image73", 74:"image74",
-                                 81:"image81", 82:"image82", 83:"image83", 84:"image84",
-                                 91:"image91", 92:"image92", 93:"image93", 94:"image94",
-                                 101:"image101", 102:"image102", 103:"image103", 104:"image104",
-                                 111:"image111", 112:"image112", 113:"image113", 114:"image114",
-                                 121:"image121", 122:"image122", 123:"image123", 124:"image124"]
-    
-
-
-    
                                 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        player1.num = 1
+        player1.points = 3
+        player2.points = 10
+        player1.Mochi_Nokori = 7
+        player1.check_points()
+        player2.check_points()
+        player1.Mochihuda()
+        
 
-//        // UIImageViewを作成する.
-//        myImageView = UIImageView(frame: CGRectMake(0,0,100,120))
-//        
-//        // 表示する画像を設定する.
-//        let myImage = UIImage(named: "test.png")
-//        
-//        // 画像をUIImageViewに設定する.
-//        myImageView.image = myImage
-//        
-//        // 画像の表示する座標を指定する.
-//        myImageView.layer.position = CGPoint(x: self.view.bounds.width/2, y: 200.0)
-//        
-//        // UIImageViewをViewに追加する.
-//        self.view.addSubview(myImageView)
-        for num in huda.keys {
-            print(num)
-        }
-        
-        for kinds in huda.values {
-            print("\(kinds):t")
-        }
-        
+////        // UIImageViewを作成する.
+////        myImageView = UIImageView(frame: CGRectMake(0,0,100,120))
+////        
+////        // 表示する画像を設定する.
+////        let myImage = UIImage(named: "test.png")
+////        
+////        // 画像をUIImageViewに設定する.
+////        myImageView.image = myImage
+////        
+////        // 画像の表示する座標を指定する.
+////        myImageView.layer.position = CGPoint(x: self.view.bounds.width/2, y: 200.0)
+////        
+////        // UIImageViewをViewに追加する.
+////        self.view.addSubview(myImageView)
+//
     }
+    
+
+    
 //
 //        // create a new scene
 //        let scene = SCNScene(named: "art.scnassets/ship.scn")!
