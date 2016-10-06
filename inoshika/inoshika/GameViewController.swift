@@ -52,14 +52,14 @@ class Player {
     func Goko_check() -> Void {                           //五光のチェック
 
         
-        for i in 0..<syutoku_maisu{
+        for i in 0..<syutoku_maisu{                       //五光札の枚数をカウントしyaku_checkに格納
             
             if huda[syutoku[i]] == "五光"{
                 yaku_check = yaku_check+1
             }
         }
         
-        switch yaku_check{
+        switch yaku_check{                                //yaku_checkにより役を識別、得点を加算
         case 3:
             print("三光です")
             points = points + 6
@@ -93,13 +93,14 @@ class Player {
     func Kasu_check() -> Void {                            //カスのチェック
         yaku_check = 0
         
-        for i in 0..<syutoku_maisu{
+        for i in 0..<syutoku_maisu{                        //カス札の枚数をカウントしyaku_checkに格納
             
             if huda[syutoku[i]] == "カス"{
                 yaku_check = yaku_check + 1
             }
         }
-       if yaku_check > 9{
+        
+       if yaku_check > 9{                                  //カス札の枚数に応じた得点を加算
             points = points + (yaku_check-9)
             print("カスです")
         }
@@ -108,14 +109,14 @@ class Player {
     func Tan_check() -> Void {                             //タンのチェック
         yaku_check = 0
         
-        for i in 0..<syutoku_maisu{
+        for i in 0..<syutoku_maisu{                        //短冊札の枚数をカウントしyaku_checkに格納
             
             if huda[syutoku[i]] == "短冊"{
                 yaku_check = yaku_check + 1
             }
         }
         
-        if yaku_check > 4{
+        if yaku_check > 4{                                 //短冊札の枚数に応じた得点を加算
             points = points + (yaku_check-4)
             print("短冊です")
         }
@@ -124,13 +125,13 @@ class Player {
     func Tane_check() -> Void {                             //タネのチェック
         yaku_check = 0
         
-        for i in 0..<syutoku_maisu{
+        for i in 0..<syutoku_maisu{                         //タネ札の枚数をカウントしyaku_checkに格納
             
             if huda[syutoku[i]] == "タネ"{
                 yaku_check = yaku_check + 1
             }
         }
-        if yaku_check > 4{
+        if yaku_check > 4{                                  //タネ札の枚数に応じた得点を加算
             points = points + (yaku_check-4)
             print("タネです")
         }
@@ -139,7 +140,7 @@ class Player {
     func InoShikaCyo() -> Void {                            //猪鹿蝶のチェック
         yaku_check = 0
         
-        for i in 0..<syutoku_maisu{
+        for i in 0..<syutoku_maisu{                         //猪・鹿・蝶の札の枚数をカウントしyaku_checkに格納
             
             if syutoku[i] == 64{
                 yaku_check = yaku_check + 1
@@ -150,7 +151,7 @@ class Player {
             }
         }
         
-        if yaku_check == 3{
+        if yaku_check == 3{                                 //猪鹿蝶の得点を加算
             points = points + 5
             print("猪鹿蝶です")
         }
@@ -161,7 +162,25 @@ class Player {
 }
 
 
-var huda: [Int:String] = [11:"カス", 12:"カス", 13:"短冊", 14:"五光",
+
+class Table {
+    var yamahuda : [Int] = [0,0,0,0]
+    var bahuda : [Int] = [0,0,0,0,0,0,0,0]
+    var bahuda_nokori = 8
+    var yamahuda_nokori = 24
+    
+    
+    
+    func test() -> Void{
+        
+        
+    }
+    
+
+}
+
+
+var huda: [Int:String] = [11:"カス", 12:"カス", 13:"短冊", 14:"五光",                   //札の識別用辞書
                             21:"カス", 22:"カス", 23:"短冊", 24:"タネ",
                             31:"カス", 32:"カス", 33:"短冊", 34:"五光",
                             41:"カス", 42:"カス", 43:"短冊", 44:"タネ",
@@ -174,7 +193,7 @@ var huda: [Int:String] = [11:"カス", 12:"カス", 13:"短冊", 14:"五光",
                             111:"カス", 112:"短冊", 113:"タネ", 114:"五光",
                             121:"カス", 122:"カス", 123:"カス", 124:"五光"]
 
-var image: [Int:String] = [11:"image11", 12:"image12", 13:"image13", 14:"image14",
+var image: [Int:String] = [11:"image11", 12:"image12", 13:"image13", 14:"image14",      //画像ファイル識別用辞書
                              21:"image21", 22:"image22", 23:"image23", 24:"image24",
                              31:"image31", 32:"image32", 33:"image33", 34:"image34",
                              41:"image41", 42:"image42", 43:"image43", 44:"image44",
