@@ -160,12 +160,11 @@ class Player {
         }
     }
     
-    func tehuda_select(select_tnum: Int, select_bnum: Int) -> Int {
+    func tehuda_select(select_tnum: Int, select_bnum: Int) -> Int {   //選択した手札と場札の番号を受け取りそれぞれを取得配列に格納
         
         syutoku[syutoku_maisu] = tehuda[select_tnum]
         tehuda[select_tnum] = 0
         syutoku_maisu += 1
-        tehuda_nokori -= 1
         syutoku[syutoku_maisu] = table.bahuda_select(select_bnum)
         syutoku_maisu += 1
         
@@ -181,18 +180,19 @@ class Player {
 
 
 class Table {
-    var yamahuda : [Int] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    var bahuda : [Int] = [73,14,12,13,44,34,24,33]
-    var bahuda_nokori = 8
-    var yamahuda_nokori = 24
-    var huda_check = 0
-    var huda_flag : [Int] = [0,0,0,0,0,0,0,0]
-    var tmp = 0
+    var yamahuda : [Int] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] //山札
+    var bahuda : [Int] = [73,14,12,13,44,34,24,33]                           //場札
+    var bahuda_nokori = 8                                                    //場札残り
+    var yamahuda_nokori = 24                                                 //山札残り
+    var huda_check = 0                                                       //任意の札枚数カウント
+    var huda_flag : [Int] = [0,0,0,0,0,0,0,0]                                //任意の札の位置を記憶
+    var tmp1 = 0                                                             //一時格納変数
+    var tmp2 = 0                                                             //一時格納変数
     
     
     
     
-    func bahuda_check(huda_num: Int) -> Void {
+    func bahuda_check(huda_num: Int) -> Int {
         
         
         let huda_num = huda_num / 10
@@ -295,20 +295,24 @@ class Table {
             for i in 0..<bahuda_nokori {
                 if huda_flag[i] != 0 {
                     print(huda_flag[i])
+                    tmp1 = i
                 }
             }
         }else{
             print("ペアとなる札が存在しません")
         }
-
+        
+            return tmp1
+        
     }
     
     func bahuda_select(select_bnum: Int) -> Int {
         
-        tmp = bahuda[select_bnum]
+        tmp1 = bahuda[select_bnum]
         bahuda[select_bnum] = 0
+    
         
-        return tmp
+        return tmp1
     }
 }
 
@@ -372,11 +376,16 @@ class GameViewController: UIViewController {
         print(player1.syutoku[17])
         print(player1.syutoku[16])
         player1.tehuda_select(2, select_bnum: 1)
+        print("")
         print(player1.syutoku[19])
         print(player1.syutoku[18])
         print(player1.syutoku[17])
         print(player1.syutoku[16])
-        table.bahuda_check(72)
+        print("")
+        print(table.bahuda_check(43))
+        
+        player1.Mochihuda()
+
         
         
 
