@@ -14,6 +14,7 @@
 		BF976D6E1D7FD2A700BF842A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF976D6C1D7FD2A700BF842A /* LaunchScreen.storyboard */; };
 		BF976D791D7FD2A700BF842A /* inoshikaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF976D781D7FD2A700BF842A /* inoshikaTests.swift */; };
 		BF976D841D7FD2A700BF842A /* inoshikaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF976D831D7FD2A700BF842A /* inoshikaUITests.swift */; };
+		BFE8687C1DA6269F007E1E37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFE8687A1DA6269F007E1E37 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		BF976D7F1D7FD2A700BF842A /* inoshikaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = inoshikaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF976D831D7FD2A700BF842A /* inoshikaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inoshikaUITests.swift; sourceTree = "<group>"; };
 		BF976D851D7FD2A700BF842A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFE8687B1DA6269F007E1E37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 		BF976D601D7FD2A700BF842A /* inoshika */ = {
 			isa = PBXGroup;
 			children = (
+				BFE8687A1DA6269F007E1E37 /* Main.storyboard */,
 				BF976D611D7FD2A700BF842A /* AppDelegate.swift */,
 				BF976D631D7FD2A700BF842A /* art.scnassets */,
 				BF976D651D7FD2A700BF842A /* GameViewController.swift */,
@@ -232,6 +235,7 @@
 				BF976D641D7FD2A700BF842A /* art.scnassets in Resources */,
 				BF976D6E1D7FD2A700BF842A /* LaunchScreen.storyboard in Resources */,
 				BF976D6B1D7FD2A700BF842A /* Assets.xcassets in Resources */,
+				BFE8687C1DA6269F007E1E37 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +303,14 @@
 				BF976D6D1D7FD2A700BF842A /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		BFE8687A1DA6269F007E1E37 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BFE8687B1DA6269F007E1E37 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

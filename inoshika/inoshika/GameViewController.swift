@@ -13,28 +13,31 @@ import SceneKit
 
 
 class Player {
-    var num :Int = 0                                //player番号
-    var mochi : [Int]=[11,103,84,22,74,83,54,0]     //持ち札
-    var syutoku : [Int]=[14,34,84,114,123,11,21,31,41,51,61,71,81,91,101,64,74,104]          //取得札
-    var mochi_nokori = 8                            //持ち札の残り枚数
+    var player_name : String = ""                                //player番号
+    var tehuda : [Int]=[11,103,84,22,74,83,54,44]     //持ち札
+    var syutoku : [Int]=[14,34,84,114,123,11,21,31,41,51,61,71,81,91,101,64,74,104,0,0,0,0]          //取得札
+    var tehuda_nokori = 8                            //持ち札の残り枚数
     var syutoku_maisu = 18                          //取得札の枚数
     var points:Int = 0                              //得点
     var yaku_check:Int = 0                          //役判定
+    var select_tnum: Int = 0                        //手札の選択
+    var select_bnum: Int = 0                        //場札の選択
     var i = 0
     var flag = 0
+
     
     
     func Check_points() -> Void {                      //得点のチェック
-        print("Player",num,"の得点は",points,"点です。")
+        print(player_name, "の得点は",points,"点です。")
     }
     
     
     func Mochihuda() -> Void {                         //持ち札のチェック
-        print("player",num,"の")
+        print(player_name, "の")
         
-        for i in 0..<mochi_nokori{
+        for i in 0..<tehuda_nokori{
             
-            print(i+1,"枚目の持ち札は",huda[mochi[i]])
+            print(i+1,"枚目の持ち札は",huda[tehuda[i]])
         
         }
     }
@@ -156,6 +159,20 @@ class Player {
             print("猪鹿蝶です")
         }
     }
+    
+    func tehuda_select(select_tnum: Int, select_bnum: Int) -> Int {
+        
+        syutoku[syutoku_maisu] = tehuda[select_tnum]
+        tehuda[select_tnum] = 0
+        syutoku_maisu += 1
+        tehuda_nokori -= 1
+        syutoku[syutoku_maisu] = table.bahuda_select(select_bnum)
+        syutoku_maisu += 1
+        
+
+        return 0
+        
+    }
 
 
     
@@ -164,21 +181,136 @@ class Player {
 
 
 class Table {
-    var yamahuda : [Int] = [0,0,0,0]
-    var bahuda : [Int] = [0,0,0,0,0,0,0,0]
+    var yamahuda : [Int] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    var bahuda : [Int] = [73,14,12,13,44,34,24,33]
     var bahuda_nokori = 8
     var yamahuda_nokori = 24
+    var huda_check = 0
+    var huda_flag : [Int] = [0,0,0,0,0,0,0,0]
+    var tmp = 0
     
     
     
-    func test() -> Void{
+    
+    func bahuda_check(huda_num: Int) -> Void {
         
         
+        let huda_num = huda_num / 10
+        huda_check = 0
+        
+        switch huda_num{
+            
+        case 1:
+            for i in 0..<bahuda_nokori{
+                if 10 < bahuda[i] && bahuda[i] < 15{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+
+        case 2:
+            for i in 0..<bahuda_nokori{
+                if 20 < bahuda[i] && bahuda[i] < 25{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 3:
+            for i in 0..<bahuda_nokori{
+                if 30 < bahuda[i] && bahuda[i] < 35{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 4:
+            for i in 0..<bahuda_nokori{
+                if 40 < bahuda[i] && bahuda[i] < 45{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 5:
+            for i in 0..<bahuda_nokori{
+                if 50 < bahuda[i] && bahuda[i] < 55{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 6:
+            for i in 0..<bahuda_nokori{
+                if 60 < bahuda[i] && bahuda[i] < 65{
+                    huda_check += 1
+                    huda_flag[i] = bahuda[i]
+                }
+            }
+        case 7:
+            for i in 0..<bahuda_nokori{
+                if 70 < bahuda[i] && bahuda[i] < 75{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 8:
+            for i in 0..<bahuda_nokori{
+                if 80 < bahuda[i] && bahuda[i] < 85{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 9:
+            for i in 0..<bahuda_nokori{
+                if 90 < bahuda[i] && bahuda[i] < 95{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 10:
+            for i in 0..<bahuda_nokori{
+                if 100 < bahuda[i] && bahuda[i] < 105{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 11:
+            for i in 0..<bahuda_nokori{
+                if 110 < bahuda[i] && bahuda[i] < 115{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+        case 12:
+            for i in 0..<bahuda_nokori{
+                if 120 < bahuda[i] && bahuda[i] < 125{
+                    huda_flag[i] = bahuda[i]
+                    huda_check += 1
+                }
+            }
+
+        default:
+            break
+        
+        }
+        
+        if huda_check != 0{
+            for i in 0..<bahuda_nokori {
+                if huda_flag[i] != 0 {
+                    print(huda_flag[i])
+                }
+            }
+        }else{
+            print("ペアとなる札が存在しません")
+        }
+
     }
     
-
+    func bahuda_select(select_bnum: Int) -> Int {
+        
+        tmp = bahuda[select_bnum]
+        bahuda[select_bnum] = 0
+        
+        return tmp
+    }
 }
-
 
 var huda: [Int:String] = [11:"カス", 12:"カス", 13:"短冊", 14:"五光",                   //札の識別用辞書
                             21:"カス", 22:"カス", 23:"短冊", 24:"タネ",
@@ -209,6 +341,7 @@ var image: [Int:String] = [11:"image11", 12:"image12", 13:"image13", 14:"image14
 
 var player1 = Player()
 var player2 = Player()
+var table = Table()
 
 
 class GameViewController: UIViewController {
@@ -225,14 +358,26 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         
-        player1.num = 1
-        player2.num = 2
-        player1.mochi_nokori = 7
+        player1.player_name = "player1"
+        player2.player_name = "player2"
+        player1.tehuda_nokori = 7
         player1.Check_points()
         player2.Check_points()
         player1.Mochihuda()
         player1.Check_yaku()
         player1.Check_points()
+        player1.Mochihuda()
+        print(player1.syutoku[19])
+        print(player1.syutoku[18])
+        print(player1.syutoku[17])
+        print(player1.syutoku[16])
+        player1.tehuda_select(2, select_bnum: 1)
+        print(player1.syutoku[19])
+        print(player1.syutoku[18])
+        print(player1.syutoku[17])
+        print(player1.syutoku[16])
+        table.bahuda_check(72)
+        
         
 
 ////        // UIImageViewを作成する.
