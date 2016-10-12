@@ -22,7 +22,6 @@ class Player {
     var yaku_check:Int = 0                          //役判定
     var select_tnum: Int = 0                        //手札の選択
     var select_bnum: Int = 0                        //場札の選択
-    var i = 0
     var flag = 0
 
     
@@ -32,7 +31,7 @@ class Player {
     }
     
     
-    func Mochihuda() -> Void {                         //持ち札のチェック
+    func Tehuda_print() -> Void {                         //持ち札のチェック
         print(player_name, "の")
         
         for i in 0..<tehuda_nokori{
@@ -160,18 +159,33 @@ class Player {
         }
     }
     
-    func tehuda_select(select_tnum: Int, select_bnum: Int) -> Int {   //選択した手札と場札の番号を受け取りそれぞれを取得配列に格納
+    func Add_syutoku_tb(select_tnum: Int, select_bnum: Int) -> Int {   //選択した手札と場札の番号を受け取りそれぞれを取得配列に格納
         
         syutoku[syutoku_maisu] = tehuda[select_tnum]
         tehuda[select_tnum] = 0
         syutoku_maisu += 1
-        syutoku[syutoku_maisu] = table.bahuda_select(select_bnum)
+        
+        syutoku[syutoku_maisu] = table.bahuda[select_bnum]
+        table.bahuda[select_bnum] = 0
         syutoku_maisu += 1
+//        syutoku[syutoku_maisu] = table.Bahuda_select(select_bnum)
+
         
 
         return 0
         
     }
+    
+    func Add_syutoku_yb(select_y: Int, select_b: Int) -> Void {
+        
+        syutoku[syutoku_maisu] = select_y
+        syutoku_maisu += 1
+        syutoku[syutoku_maisu] = select_b
+        syutoku_maisu += 1
+        
+    }
+    
+
 
 
     
@@ -180,19 +194,25 @@ class Player {
 
 
 class Table {
-    var yamahuda : [Int] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] //山札
-    var bahuda : [Int] = [73,14,12,13,44,34,24,33]                           //場札
-    var bahuda_nokori = 8                                                    //場札残り
+    var base : [Int] = [11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44,
+                        51, 52, 53, 54, 61, 62, 63, 64, 71, 72, 73, 74, 81, 82, 83, 84,
+                        91, 92, 93, 94, 101, 102, 103, 104, 111, 112, 113, 114, 121, 122, 123, 124]
+    var shuffle_base : [Int] = [ ]
+    var yamahuda : [Int] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,52] //山札
+    var bahuda : [Int] = [73,14,12,13,44,34,0,0]                           //場札
+    var bahuda_nokori = 6                                                    //場札残り
     var yamahuda_nokori = 24                                                 //山札残り
     var huda_check = 0                                                       //任意の札枚数カウント
     var huda_flag : [Int] = [0,0,0,0,0,0,0,0]                                //任意の札の位置を記憶
     var tmp1 = 0                                                             //一時格納変数
     var tmp2 = 0                                                             //一時格納変数
+    var base_num : UInt32 = 48
+    var tmp3 = 47
+    var tmp4 = 0
     
     
     
-    
-    func bahuda_check(huda_num: Int) -> Int {
+    func Bahuda_check(huda_num: Int) -> Int {
         
         
         let huda_num = huda_num / 10
@@ -306,7 +326,7 @@ class Table {
         
     }
     
-    func bahuda_select(select_bnum: Int) -> Int {
+    func Bahuda_select(select_bnum: Int) -> Int {
         
         tmp1 = bahuda[select_bnum]
         bahuda[select_bnum] = 0
@@ -314,7 +334,71 @@ class Table {
         
         return tmp1
     }
+    
+    func Draw(player_num: Int) -> Int {
+        tmp3 = 0
+        
+        tmp2 = yamahuda[yamahuda_nokori - 1]
+        yamahuda[yamahuda_nokori - 1] = 0
+        yamahuda_nokori -= 1
+        
+        for i in 0 ..< bahuda_nokori {
+            if tmp2/10 == bahuda[i]/10 {
+                tmp3 = Bahuda_select(i)
+                
+                if player_num == 1 {
+                    player1.Add_syutoku_yb(tmp2, select_b: tmp3)
+                }else if player_num == 2 {
+                    player2.Add_syutoku_yb(tmp2, select_b: tmp3)
+                }
+                
+                return 0
+            }
+        }
+        
+        bahuda[bahuda_nokori] = tmp2
+        bahuda_nokori += 1
+        
+        return 1
+    }
+
+    
+    func Shuffle () -> Void {                           //シャッフル関数
+        
+        for i in 0 ..< 48 {                       //base配列をランダムにしてbase_shuffle配列に格納
+            self.shuffle_base.append(self.base.removeAtIndex(Int(arc4random_uniform(UInt32(48 - i)))))
+        }
+
+        
+        for i in 0 ..< 8 {
+            player1.tehuda[i] = shuffle_base[i]
+        }
+        
+        for i in 8 ..< 16 {
+            player2.tehuda[i - 8] = shuffle_base[i]
+        }
+        
+        for i in 16 ..< 24 {
+            table.bahuda[i - 16] = shuffle_base[i]
+        }
+        
+        for i in 24 ..< 48 {
+            table.yamahuda[i - 24] = shuffle_base[i]
+        }
+
+        
+    }
+    
+    func test() -> Void {
+        tmp4 += 1
+        print("tmp4:", tmp4)
+    }
+    
+
 }
+
+
+
 
 var huda: [Int:String] = [11:"カス", 12:"カス", 13:"短冊", 14:"五光",                   //札の識別用辞書
                             21:"カス", 22:"カス", 23:"短冊", 24:"タネ",
@@ -365,27 +449,69 @@ class GameViewController: UIViewController {
         player1.player_name = "player1"
         player2.player_name = "player2"
         player1.tehuda_nokori = 7
-        player1.Check_points()
-        player2.Check_points()
-        player1.Mochihuda()
-        player1.Check_yaku()
-        player1.Check_points()
-        player1.Mochihuda()
-        print(player1.syutoku[19])
-        print(player1.syutoku[18])
-        print(player1.syutoku[17])
-        print(player1.syutoku[16])
-        player1.tehuda_select(2, select_bnum: 1)
-        print("")
-        print(player1.syutoku[19])
-        print(player1.syutoku[18])
-        print(player1.syutoku[17])
-        print(player1.syutoku[16])
-        print("")
-        print(table.bahuda_check(43))
-        
-        player1.Mochihuda()
+        print("null")
+      //  table.Shuffle()
 
+        
+        for test2 in player1.syutoku {
+            print(test2)
+        }
+        
+        for test2 in table.bahuda {
+            print(test2)
+        }
+        
+        for test2 in table.yamahuda {
+            print(test2)
+        }
+        
+
+        
+        table.Draw(1)
+        for test2 in table.shuffle_base {
+            print(test2)
+        }
+
+        print("")
+        
+
+        
+        for test2 in table.bahuda {
+            print(test2)
+        }
+        
+        for test2 in table.yamahuda {
+            print(test2)
+        }
+        
+        for test2 in player1.syutoku {
+            print(test2)
+        }
+        
+        print("")
+        table.Draw(1)
+        
+        for test2 in table.bahuda {
+            print(test2)
+        }
+        
+        for test2 in table.yamahuda {
+            print(test2)
+        }
+        
+        for test2 in player1.syutoku {
+            print(test2)
+        }
+        
+//        for test3 in player1.tehuda {
+//            print(test3)
+//        }
+//        
+//        print("")
+//
+//        for test4 in table.yamahuda {
+//            print(test4)
+//        }
         
         
 
