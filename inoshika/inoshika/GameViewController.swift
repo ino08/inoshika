@@ -212,7 +212,7 @@ class Table {
     
     
     
-    func Bahuda_check(huda_num: Int) -> Int {
+    func Bahuda_check(huda_num: Int) -> Int {                               //選択した手札と合う場札が無いか検索
         
         
         let huda_num = huda_num / 10
@@ -335,7 +335,7 @@ class Table {
         return tmp1
     }
     
-    func Draw(player_num: Int) -> Int {
+    func Draw(player_num: Int) -> Int {            //山札からDrawを行う関数
         tmp3 = 0
         
         tmp2 = yamahuda[yamahuda_nokori - 1]
@@ -389,10 +389,6 @@ class Table {
         
     }
     
-    func test() -> Void {
-        tmp4 += 1
-        print("tmp4:", tmp4)
-    }
     
 
 }
