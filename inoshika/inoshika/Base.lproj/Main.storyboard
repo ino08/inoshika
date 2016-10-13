@@ -44,28 +44,6 @@
             </objects>
             <point key="canvasLocation" x="-837" y="-369"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ga4-8l-kgM">
-            <objects>
-                <viewController id="tBY-jv-Dd6" sceneMemberID="viewController">
-                    <button key="view" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mmE-Tk-yTt">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="Button"/>
-                        <connections>
-                            <segue destination="BV1-FR-VrT" kind="presentation" id="Qxv-69-cUa"/>
-                        </connections>
-                    </button>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="w4V-xS-tsa" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ryG-Yx-aZD">
-                    <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                </button>
-            </objects>
-            <point key="canvasLocation" x="571" y="258"/>
-        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.59220529057618476" blue="0.71133529596705758" alpha="1" colorSpace="calibratedRGB"/>
 </document>

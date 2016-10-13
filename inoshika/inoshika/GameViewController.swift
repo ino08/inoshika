@@ -9,17 +9,19 @@
 import UIKit
 import QuartzCore
 import SceneKit
+import Foundation                                           //コンソール表示
 
 
 
 class Player {
     var player_num : Int = 0                                //player番号
-    var tehuda : [Int]=[11,103,84,22,74,83,54,44]           //持ち札
-    var syutoku : [Int]=[1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]          //取得札
+    var tehuda : [Int]=[0,0,0,0,0,0,0,0]           //持ち札
+    var syutoku : [Int]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]          //取得札
     var tehuda_max = 8                              //持ち札の残り枚数
     var tehuda_cnt = 0                              //手札の残数のカウント用
-    var syutoku_maisu = 2                           //取得札の枚数
-    var points:Int = 0                              //得点
+    var syutoku_maisu = 0                          //取得札の枚数
+    var points: Int = 0                              //得点
+    var points_tmp: Int = 0
     var yaku_cnt:Int = 0                            //役判定
     var select_tnum: Int = 0                        //手札の選択
     var select_bnum: Int = 0                        //場札の選択
@@ -44,28 +46,40 @@ class Player {
     }
     
     func Check_tehuda() -> Int {                          //手札の枚数をカウントする関数
-        
         tehuda_cnt = 0
         
         for i in 0 ..< 8 {
             
-            if tehuda[i] == 0 {
+            if tehuda[i] != 0 {
                 tehuda_cnt += 1
             }
         }
+        print("手札", tehuda_cnt)
         
         return tehuda_cnt
     }
     
  
     
-    func Check_yaku() -> Void {                           //役のチェック関数
+    func Check_yaku() -> Int {                           //役のチェック関数
         yc_flag = 0
+        points_tmp = 0
         
         Goko_check()
+        print(points_tmp)
         Kasu_check()
+        print(points_tmp)
         Tan_check()
+        print(points_tmp)
         InoShikaCyo()
+        print(points_tmp)
+        
+        if points != points_tmp {
+            points = points_tmp
+            
+            return 1
+        }
+        return 0
         
     }
     
@@ -82,7 +96,7 @@ class Player {
         switch yaku_cnt{                                  //yaku_checkにより役を識別、得点を加算
         case 3:
             print("三光です")
-            points = points + 6
+            points_tmp = points_tmp + 6
         case 4:
             yc_flag = 0
             
@@ -95,18 +109,17 @@ class Player {
             
             if yc_flag == 1 {
                 print("雨四光です")
-                points = points + 8
+                points_tmp = points_tmp + 8
             } else {
                 print("四光です")
-                points = points + 10
+                points_tmp = points_tmp + 10
             }
         case 5:
             print("五光です")
-            points = points + 15
+            points_tmp = points_tmp + 15
         default:
             print(yaku_cnt)
         }
-        
         
     }
     
@@ -121,7 +134,7 @@ class Player {
         }
         
        if yaku_cnt > 9{                                    //カス札の枚数に応じた得点を加算
-            points = points + (yaku_cnt-9)
+            points_tmp = points_tmp + (yaku_cnt-9)
             print("カスです")
         }
     }
@@ -137,7 +150,7 @@ class Player {
         }
         
         if yaku_cnt > 4{                                   //短冊札の枚数に応じた得点を加算
-            points = points + (yaku_cnt-4)
+            points_tmp = points_tmp + (yaku_cnt-4)
             print("短冊です")
         }
     }
@@ -152,7 +165,7 @@ class Player {
             }
         }
         if yaku_cnt > 4{                                    //タネ札の枚数に応じた得点を加算
-            points = points + (yaku_cnt - 4)
+            points_tmp = points_tmp + (yaku_cnt - 4)
             print("タネです")
         }
     }
@@ -172,7 +185,7 @@ class Player {
         }
         
         if yaku_cnt == 3{                                    //猪鹿蝶の得点を加算
-            points = points + 5
+            points_tmp = points_tmp + 5
             print("猪鹿蝶です")
         }
     }
@@ -222,7 +235,9 @@ class Player {
             
             if table.bahuda[i] == 0 {
                 table.bahuda[i] = tehuda[select_t]
-                return 0
+                tehuda[select_t] = 0
+                break
+                //return 0
             }
         }
         
@@ -233,7 +248,7 @@ class Player {
 
     
     
-    func CP() -> Void {                                                 //CPの動作決定関数
+    func CP(player: Int) -> Void {                                                 //CPの動作決定関数
         
         for i in 0 ..< 8 {
         
@@ -242,14 +257,12 @@ class Player {
                  cp_flag = Add_syutoku_tb(i, select_bnum: j)
                 
                 if cp_flag == 0 {
-                    print("test")
                     break
                 }
                 
             }
             
             if cp_flag == 0 {
-                print("test2")
 
                 break
             }
@@ -263,13 +276,13 @@ class Player {
             for i in 0 ..< 8 {
                 
                 if tehuda[i] != 0 {
-                    Add_bahuda_t(tehuda[i])
+                    Add_bahuda_t(i)
                     break
                 }
             }
         }
         
-        table.Draw(1)
+        table.Draw(player)
 
         
     }
@@ -288,8 +301,8 @@ class Table {
                         51, 52, 53, 54, 61, 62, 63, 64, 71, 72, 73, 74, 81, 82, 83, 84,
                         91, 92, 93, 94, 101, 102, 103, 104, 111, 112, 113, 114, 121, 122, 123, 124] //base配列
     var shuffle_base : [Int] = [ ]                                           //shuffle後のbase配列格納
-    var yamahuda : [Int] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,122,11,52,51] //山札
-    var bahuda : [Int] = [73,14,12,13,43,34,0,0]                             //場札
+    var yamahuda : [Int] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] //山札
+    var bahuda : [Int] = [0,0,0,0,0,0,0,0,0,0,0,0]                             //場札
     var bahuda_max = 8                                                       //場札最大枚数
     var yamahuda_nokori = 24                                                 //山札残数
     var huda_check = 0                                                       //任意の札枚数カウント
@@ -440,7 +453,7 @@ class Table {
     }
     
     func Draw(player_num: Int) -> Int {            //山札からDrawを行う関数
-        print("true")
+ 
         draw_btmp = 0
         
         draw_ytmp = yamahuda[yamahuda_nokori - 1]
@@ -449,7 +462,7 @@ class Table {
         
         for i in 0 ..< bahuda_max {
             if draw_ytmp/10 == bahuda[i]/10 {
-                print("true2")
+
                 draw_btmp = Bahuda_select(i)
                 
                 if player_num == 1 {
@@ -461,7 +474,6 @@ class Table {
                 return 0
             }
         }
-        print(draw_ytmp)
         Add_bahuda_y(draw_ytmp)
         
         return 1
@@ -533,9 +545,15 @@ var player2 = Player()
 var table = Table()
 
 
+
+
 class GameViewController: UIViewController {
     
     private var myImageView: UIImageView!
+    
+    var alert:UIAlertController!
+    
+    
     
     @IBOutlet weak var testButton: UIButton!
     
@@ -546,54 +564,85 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
+
         
+        
+        var turn: Int = (Int(arc4random_uniform(UInt32(2))) + 1)
+        var flag: Int = 0
         player1.player_num = 1
         player2.player_num = 2
-        print("null")
-      //  table.Shuffle()
         
+        
+        table.Shuffle()
+        
+        print("player", turn, "が先行です。")
+        
+        while true{
+        
+        switch turn {
+            
+        case 1:
+            flag = 0
+            print("1のターン")
+            player1.CP(turn)
+            flag = player1.Check_yaku()
+            
+            if flag == 1 {
+                print("得点更新です", "player1:", player1.points)
+            }
+             turn = 2
+             break
+            
+        case 2:
+            flag = 0
+            print("2のターン")
+            player2.CP(turn)
+            flag = player2.Check_yaku()
+            
+            if flag == 1 {
+                print("得点更新です", "player2:", player2.points)
+            }
+            
+            turn = 1
+            break
+            
+        default: break
+            
+            
+        }
+        
+        if player1.Check_tehuda() == 0 && player2.Check_tehuda() == 0 {
+                break
+            
+            }
+        
+        }
+        
+        
+        
+        if player1.points < player2.points {
+            print("player2の勝ちです")
+        }else if player2.points < player1.points {
+            print("player1の勝ちです")
+        }else{
+            print("引き分けです")
+        }
+        
+        
+        
+        
+        var alert = UIAlertView()
+        alert.title = "title"
+        alert.message = "message"
+        alert.addButtonWithTitle("OK")
+        alert.show()
 
         
-        for test2 in table.bahuda {
-            print(test2)
-        }
-        
-        for test2 in table.yamahuda {
-            print(test2)
-        }
-  
-                print("")
-        for test2 in player1.syutoku {
-            print(test2)
-        }
+    }
 
-        
-        player1.CP()
-                print("")
-                print(player1.syutoku_maisu)
     
-
-
-        print("")
-        
-        print("")
-        
-        
-
-        
-        for test2 in table.bahuda {
-            print(test2)
-        }
-        
-        for test2 in table.yamahuda {
-            print(test2)
-        }
-        print("")
-        for test2 in player1.syutoku {
-            print(test2)
-        }
-        
-        print("")
+    
+        //  table.Shuffle()
 
         
 //        for test3 in player1.tehuda {
@@ -623,7 +672,6 @@ class GameViewController: UIViewController {
 ////        // UIImageViewをViewに追加する.
 ////        self.view.addSubview(myImageView)
 //
-    }
     
 
     
