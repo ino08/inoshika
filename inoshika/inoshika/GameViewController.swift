@@ -54,7 +54,7 @@ class Player {
                 tehuda_cnt += 1
             }
         }
-        print("手札", tehuda_cnt)
+        print(player_num, "の手札は", tehuda_cnt, "枚です")
         
         return tehuda_cnt
     }
@@ -66,13 +66,9 @@ class Player {
         points_tmp = 0
         
         Goko_check()
-        print(points_tmp)
         Kasu_check()
-        print(points_tmp)
         Tan_check()
-        print(points_tmp)
         InoShikaCyo()
-        print(points_tmp)
         
         if points != points_tmp {
             points = points_tmp
@@ -118,7 +114,7 @@ class Player {
             print("五光です")
             points_tmp = points_tmp + 15
         default:
-            print(yaku_cnt)
+            break
         }
         
     }
@@ -259,14 +255,10 @@ class Player {
                 if cp_flag == 0 {
                     break
                 }
-                
             }
-            
             if cp_flag == 0 {
-
                 break
             }
-            
             
         }
         
@@ -311,6 +303,7 @@ class Table {
     var bahuda_tmp = 0                                                       //場札の一時格納変数
     var draw_ytmp = 0                                                        //Draw関数の山札格納変数
     var draw_btmp = 0                                                        //Draw関数の場札格納変数
+    var kiki_flag = 0
     
     
     
@@ -416,7 +409,6 @@ class Table {
         if huda_check != 0{
             for i in 0..<bahuda_max {
                 if huda_flag[i] != 0 {
-                    print(huda_flag[i])
                     pair_cnt = i
                 }
             }
@@ -551,7 +543,6 @@ class GameViewController: UIViewController {
     
     private var myImageView: UIImageView!
     
-    var alert:UIAlertController!
     
     
     
@@ -562,65 +553,83 @@ class GameViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
 
         
         
         var turn: Int = (Int(arc4random_uniform(UInt32(2))) + 1)
-        var flag: Int = 0
+        var points_flag: Int = 0
+
+        
         player1.player_num = 1
         player2.player_num = 2
         
         
-        table.Shuffle()
+        table.Shuffle()                                         //札のシャッフル
+        
+        for test1 in player1.tehuda {
+            print(test1)
+        }
         
         print("player", turn, "が先行です。")
         
-        while true{
+        while true{                                             //無限ループ
         
-        switch turn {
+        switch turn {                                           //turnによって動作変更
             
-        case 1:
-            flag = 0
+        case 1:                                                 //player1のターンの操作
+  
+            points_flag = 0
             print("1のターン")
             player1.CP(turn)
-            flag = player1.Check_yaku()
-            
-            if flag == 1 {
+            points_flag = player1.Check_yaku()
+            if points_flag == 1 {
                 print("得点更新です", "player1:", player1.points)
             }
              turn = 2
              break
             
-        case 2:
-            flag = 0
+        case 2:                                                 //player2のターンの操作
+            points_flag = 0
             print("2のターン")
             player2.CP(turn)
-            flag = player2.Check_yaku()
+            points_flag = player2.Check_yaku()
             
-            if flag == 1 {
+            if points_flag == 1 {
                 print("得点更新です", "player2:", player2.points)
+                
+                sleep(1)
+                testview()
+                sleep(3)
+
             }
-            
             turn = 1
             break
             
         default: break
-            
-            
         }
+            
         
-        if player1.Check_tehuda() == 0 && player2.Check_tehuda() == 0 {
+            if player1.Check_tehuda() == 0 && player2.Check_tehuda() == 0 {         //両方のplayerの手札がなくなるとループ終了
+                print("手札がなくなりました")
                 break
-            
+            }else if table.kiki_flag == 1 {                                         //こいこいしないとループ終了
+                print("こいこいしませんでした")
+                break
             }
+
         
         }
         
         
         
-        if player1.points < player2.points {
+        if player1.points < player2.points {                                        //勝者判定
             print("player2の勝ちです")
         }else if player2.points < player1.points {
             print("player1の勝ちです")
@@ -628,32 +637,56 @@ class GameViewController: UIViewController {
             print("引き分けです")
         }
         
-        
-        
-        
-        var alert = UIAlertView()
-        alert.title = "title"
-        alert.message = "message"
-        alert.addButtonWithTitle("OK")
-        alert.show()
 
         
+
     }
 
-    
-    
-        //  table.Shuffle()
 
-        
-//        for test3 in player1.tehuda {
-//            print(test3)
-//        }
-//        
-//        print("")
-//
-//        for test4 in table.yamahuda {
-//            print(test4)
-//        }
+    
+        func testview() -> Void {                                          //こいこい用アラート
+            
+            //var flag: Int = 0
+            let alert:UIAlertController = UIAlertController(title: "タイトル", message: "メッセージ", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            
+            alert.addAction(UIAlertAction(title: "はい", style: UIAlertActionStyle.Default, handler: {
+                (alert: UIAlertAction!) in
+                
+                table.kiki_flag = 2
+                print("view_yes:", table.kiki_flag)
+                
+                }))
+            alert.addAction(UIAlertAction(title: "いいえ", style: UIAlertActionStyle.Cancel, handler: {
+                (alert: UIAlertAction!) in
+                table.kiki_flag = 1
+                print("view_no:", table.kiki_flag)
+            }))
+
+            print("viewの起動中です")
+            sleep(1)
+            self.presentViewController(alert, animated: true, completion: nil)
+            print("実行完了")
+            sleep(3)
+    }
+    
+    
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Release any cached data, images, etc that aren't in use.
+    }
+    
+}
+
+
+
+
+
+    
+    
+
         
         
 
@@ -672,9 +705,11 @@ class GameViewController: UIViewController {
 ////        // UIImageViewをViewに追加する.
 ////        self.view.addSubview(myImageView)
 //
-    
 
-    
+//             let alert:UIAlertController! = UIAlertController(title: "タイトル", message: "メッセージ", preferredStyle: UIAlertControllerStyle.Alert)
+
+
+
 //
 //        // create a new scene
 //        let scene = SCNScene(named: "art.scnassets/ship.scn")!
@@ -778,9 +813,8 @@ class GameViewController: UIViewController {
 //        }
 //    }
 //    
-        override func didReceiveMemoryWarning() {
-            super.didReceiveMemoryWarning()
-           // Release any cached data, images, etc that aren't in use.
-        }
 
-}
+    
+
+
+

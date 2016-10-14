@@ -14,11 +14,11 @@
                         <viewControllerLayoutGuide type="bottom" id="tXD-Yg-euY"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="141-Hk-Dh0">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROA-jV-q28">
-                                <rect key="frame" x="30" y="628" width="354" height="50"/>
+                                <rect key="frame" x="30" y="306" width="676" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="kIR-l2-HBv"/>
                                 </constraints>
@@ -35,6 +35,7 @@
                             <constraint firstAttribute="bottom" secondItem="ROA-jV-q28" secondAttribute="bottom" constant="58" id="yOs-Tm-JHE"/>
                         </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="testButton" destination="ROA-jV-q28" id="MUq-Sa-HHk"/>
@@ -42,8 +43,8 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-837" y="-369"/>
+            <point key="canvasLocation" x="-1913" y="57"/>
         </scene>
     </scenes>
-    <color key="tintColor" red="1" green="0.59220529057618476" blue="0.71133529596705758" alpha="1" colorSpace="calibratedRGB"/>
+    <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>
